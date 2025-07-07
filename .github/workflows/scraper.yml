@@ -1,0 +1,33 @@
+name: Auto Scrape Research Proposals
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'  # every 6 hours
+  workflow_dispatch:        # allows manual run
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout repo
+        uses: actions/checkout@v3
+
+      - name: 🟢 Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: 📦 Install dependencies
+        run: npm install
+
+      - name: 🕸️ Run scraper
+        run: node scraper.js
+
+      - name: ✅ Commit and push changes
+        run: |
+          git config --global user.email "bot@mohsinhassan.in"
+          git config --global user.name "AutoScraper Bot"
+          git add frontend/public/proposals.json
+          git commit -m "🔄 Auto update proposals.json [CI skip]" || echo "No changes to commit"
+          git push
