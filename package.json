@@ -4,7 +4,7 @@
   "description": "",
   "main": "scraper.js",
   "scripts": {
-    "start": "node scraper.js"
+    "start": "node ju_shodh_sahayak-main1/scraper.js"
   },
   "keywords": [],
   "author": "",
